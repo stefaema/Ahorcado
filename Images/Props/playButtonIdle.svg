@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="108.27789mm"
+   height="10.191158mm"
+   viewBox="0 0 108.27789 10.191158"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-52.460119,-160.77563)">
+    <rect
+       style="fill:#217844;fill-opacity:1;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round"
+       id="rect11"
+       width="107.21955"
+       height="9.1328411"
+       x="52.460117"
+       y="160.77563" />
+    <rect
+       style="fill:#afe9c6;fill-opacity:1;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round"
+       id="rect10"
+       width="107.21955"
+       height="9.1328411"
+       x="53.518452"
+       y="161.83395" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:BitOut;-inkscape-font-specification:BitOut;text-align:center;text-anchor:middle;white-space:pre;inline-size:119.205;fill:#217844;fill-opacity:1;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round"
+       x="94.890144"
+       y="183.47983"
+       id="text10"
+       transform="translate(12.611118,-14.44349)"><tspan
+         x="94.890144"
+         y="183.47983"
+         id="tspan1">...salvar a tu amigo?</tspan></text>
+  </g>
+</svg>
