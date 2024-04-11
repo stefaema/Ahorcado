@@ -7,6 +7,9 @@ class Button():
         self.idle_image = pygame.transform.scale(idle_image, (int(width * scale), int(height * scale)))
         self.hover_image = pygame.transform.scale(hover_image, (int(width * scale), int(height * scale)))
         self.pressed_image = pygame.transform.scale(pressed_image, (int(width * scale), int(height * scale)))
+        self.idle_image.set_colorkey((0,0,0))
+        self.hover_image.set_colorkey((0,0,0))
+        self.pressed_image.set_colorkey((0,0,0))
         self.image = self.idle_image
         self.rect = self.image.get_rect(center = (x,y))
         

@@ -22,6 +22,7 @@ class SpriteSheet:
         images = []
         for cell in self.cells:
             image = pygame.Surface((self.cell_width, self.cell_height)).convert_alpha()
+            image.set_colorkey((0, 0, 0))  
             image.blit(self.sheet, (0, 0), cell)
             scaled_image = pygame.transform.scale(image, (int(self.cell_width * self.cell_scale), int(self.cell_height * self.cell_scale)))
             scaled_image.set_colorkey((0, 0, 0))  
