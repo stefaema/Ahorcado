@@ -5,21 +5,19 @@ class Animation():
     def __init__(self, screen, delayPerFrame, spriteSheetPath, initialPos = [0,0], scale = 1):
         self.screen = screen
         self.current_frame = 0
-        self.animationDelay = 0
+        self.delayCounter = 0
         self.delayPerFrame = delayPerFrame
         self.spriteSheet = SpriteSheet(spriteSheetPath, scale)
         self.animationFrames = self.spriteSheet.get_images()
         self.x = initialPos[0]
         self.y = initialPos[1]
-
     def update(self):
 
-        self.animationDelay += 1
-        if self.animationDelay % self.delayPerFrame == 0:
+        self.delayCounter += 1
+        if self.delayCounter % self.delayPerFrame == 0:
             self.current_frame += 1
             if self.current_frame >= len(self.animationFrames):
                 self.current_frame = 0
-        
 
     def draw(self):
         pass
@@ -50,7 +48,7 @@ class MovingAnimation(Animation):
 
     def update(self):
         super().update()
-        if self.animationDelay % self.delayPerFrame == 0:
+        if self.delayCounter % self.delayPerFrame == 0:
             self.current_frame += 1
             self.x += self.xPerUpdate
             self.y += self.yPerUpdate

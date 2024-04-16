@@ -71,10 +71,10 @@ class MainMenuScene(Scene):
         
         
         self.playButton = self.create_button((screen.get_width()) // 2, ((3*screen.get_height()) // 4)-20, 'Images/Props/playButtonIdle.png', 'Images/Props/playButtonHover.png', 'Images/Props/playButtonPressed.png', 0.5)
-        self.playButtonAction = False
+        self.playButtonIsClicked = False
 
     def update(self):
-        if self.playButtonAction:
+        if self.playButtonIsClicked:
             return PvPGameScene(self.screen)
         
     def draw(self):
@@ -82,7 +82,7 @@ class MainMenuScene(Scene):
         
         self.screen.blit(self.background, (0, 0))
         self.screen.blit(self.textPlotImage, self.textPlotImage_rect)
-        self.playButtonAction = self.playButton.draw(self.screen)
+        self.playButtonIsClicked = self.playButton.draw(self.screen)
         
 
 class PvPGameScene(Scene):
