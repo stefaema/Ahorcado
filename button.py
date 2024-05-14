@@ -12,13 +12,11 @@ class Button():
         self.pressed_image.set_colorkey((0,0,0))
         self.image = self.idle_image
         self.rect = self.image.get_rect(center = (x,y))
-        
         self.clicked = False
 
     def draw(self, surface):
         action = False
         pos = pygame.mouse.get_pos()
-
         if self.rect.collidepoint(pos):
             self.image = self.hover_image
             if pygame.mouse.get_pressed()[0] == 1 and not self.clicked:

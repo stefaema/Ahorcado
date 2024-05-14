@@ -4,8 +4,9 @@ class SpriteSheet:
         self.sheet = pygame.image.load(filename).convert_alpha()
         
         if cols == -1 and rows == -1:
-            cols = self.sheet.get_width()//pixelsPerCellX
-            rows = self.sheet.get_height()//pixelsPerCellY
+            cols, rows = self.calculate_cols_and_rows(self.sheet.get_width(), self.sheet.get_height(), pixelsPerCellX, pixelsPerCellY)
+            print("cols: ", cols)
+            print("rows: ", rows)
         
         self.cols = cols
         self.rows = rows
@@ -28,3 +29,8 @@ class SpriteSheet:
             scaled_image.set_colorkey((0, 0, 0))  
             images.append(scaled_image)
         return images
+    
+    def calculate_cols_and_rows( width, height, pixelsPerCellX, pixelsPerCellY):
+        cols = width//pixelsPerCellX
+        rows = height//pixelsPerCellY
+        return cols, rows
