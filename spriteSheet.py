@@ -30,7 +30,7 @@ class SpriteSheet:
             images.append(scaled_image)
         return images
     
-    def calculate_cols_and_rows( width, height, pixelsPerCellX, pixelsPerCellY):
+    def calculate_cols_and_rows( self, width, height, pixelsPerCellX, pixelsPerCellY):
         cols = width//pixelsPerCellX
         rows = height//pixelsPerCellY
         return cols, rows
