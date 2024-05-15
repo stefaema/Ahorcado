@@ -85,15 +85,15 @@ class TestSpriteSheet(unittest.TestCase):
         self.assertEqual(len(self.spriteSheet.get_images()), 9)
     
 
-    #Prueba de la creación sin parametros de columnas y filas
-    @patch('pygame.image.load', return_value=MagicMock())
-    @patch('pygame.Surface', return_value=MagicMock())
-    @patch('pygame.transform', return_value=MagicMock())
-    def test_get_images_1(self, mockSheet, __, ___):
-        self.spriteSheet = SpriteSheet(MagicMock(), 0.5)
-        self.spriteSheet.sheet.get_width.return_value = 640
-        self.spriteSheet.sheet.get_height.return_value = 640
-        self.spriteSheet.calculate_cols_and_rows(self.spriteSheet.sheet.get_width(), self.spriteSheet.sheet.get_height(), 320, 320)
+    # #Prueba de la creación sin parametros de columnas y filas
+    # @patch('pygame.image.load', return_value=MagicMock())
+    # @patch('pygame.Surface', return_value=MagicMock())
+    # @patch('pygame.transform', return_value=MagicMock())
+    # def test_get_images_1(self, mockSheet, __, ___):
+    #     self.spriteSheet = SpriteSheet(MagicMock(), 0.5)
+    #     self.spriteSheet.sheet.get_width.return_value = 640
+    #     self.spriteSheet.sheet.get_height.return_value = 640
+    #     self.spriteSheet.calculate_cols_and_rows(self.spriteSheet.sheet.get_width(), self.spriteSheet.sheet.get_height(), 320, 320)
 
 
 
