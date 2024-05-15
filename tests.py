@@ -3,6 +3,7 @@ from unittest.mock import MagicMock, patch
 from button import Button
 from spriteSheet import SpriteSheet
 import pygame
+import xmlrunner
 
 class TestButton(unittest.TestCase):
     #Setup de la prueba del botón
@@ -70,9 +71,12 @@ class TestButton(unittest.TestCase):
         self.assertFalse(self.button.clicked)
 
 class TestSpriteSheet(unittest.TestCase):
+
+    #Setup de la prueba de sprite sheet
     def setUp(self):
         pygame.init()
 
+    #Prueba de la creación con parametros de columnas y filas
     @patch('pygame.image.load', return_value=MagicMock())
     @patch('pygame.Surface', return_value=MagicMock())
     @patch('pygame.transform', return_value=MagicMock())
@@ -81,7 +85,7 @@ class TestSpriteSheet(unittest.TestCase):
         self.assertEqual(len(self.spriteSheet.get_images()), 9)
     
 
-
+    #Prueba de la creación sin parametros de columnas y filas
     @patch('pygame.image.load', return_value=MagicMock())
     @patch('pygame.Surface', return_value=MagicMock())
     @patch('pygame.transform', return_value=MagicMock())
@@ -90,5 +94,8 @@ class TestSpriteSheet(unittest.TestCase):
         self.spriteSheet.sheet.get_width.return_value = 640
         self.spriteSheet.sheet.get_height.return_value = 640
         self.spriteSheet.calculate_cols_and_rows(self.spriteSheet.sheet.get_width(), self.spriteSheet.sheet.get_height(), 320, 320)
+
+
+
 if __name__ == '__main__':
-    unittest.main(verbosity=2)
+    unittest.main(testRunner=xmlrunner.XMLTestRunner(output='test-reports'))
