@@ -1,0 +1,53 @@
+name: Automatic Test with Conditional Commit
+
+on:
+  push:
+    branches: [ production ]
+  pull_request:
+    branches: [ production ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Create test-reports directory
+        run: mkdir -p test-reports
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests with unittest
+        run: |
+          python -m unittest tests.py
+
+      - name: Set failure flag if tests fail
+        if: ${{ steps.run-tests.outcome == 'failure' }}
+        run: |
+          echo "Tests failed"
+          echo "::set-output name=test_failed::true"
+
+      - name: Commit changes (only if tests pass)
+        if: ${{ steps.set-failure-flag.outputs.test_failed != 'true' }}
+        uses: actions/checkout@v2
+
+      - name: Push changes
+        if: ${{ steps.commit-changes.outcome == 'success' }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload test reports (always)
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: test-reports/*.xml
