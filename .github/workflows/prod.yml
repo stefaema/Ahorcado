@@ -2,9 +2,9 @@ name: Automatic Test with Conditional Commit
 
 on:
   push:
-    branches: [ main ]
+    branches: [ production ]
   pull_request:
-    branches: [ main ]
+    branches: [ production ]
 
 jobs:
   build:
