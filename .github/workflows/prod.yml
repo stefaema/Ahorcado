@@ -43,7 +43,7 @@ jobs:
       - name: Create commit message
         run: |
           git add .
-          git diff --quiet HEAD~1 HEAD > commit-message.txt
+          git diff --quiet HEAD~1 HEAD -- commit-message.txt
 
       - name: Commit changes
         run: |
