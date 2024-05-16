@@ -53,7 +53,7 @@ jobs:
 
       - name: Push changes
         if: ${{ steps.commit-changes.outcome == 'success' }}
-        uses: ad-m/github-push-action@latest
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
