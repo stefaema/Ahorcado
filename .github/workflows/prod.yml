@@ -40,17 +40,6 @@ jobs:
         if: ${{ steps.set-failure-flag.outputs.test_failed != 'true' }}
         uses: actions/checkout@v2
 
-      - name: Create commit message
-        run: |
-          git add .
-          git diff --quiet HEAD~1 HEAD -- commit-message.txt
-
-      - name: Commit changes
-        run: |
-          if [ -f commit-message.txt ]; then
-            git commit -m "`cat commit-message.txt`"
-          fi
-
       - name: Push changes
         if: ${{ steps.commit-changes.outcome == 'success' }}
         uses: ad-m/github-push-action@master
