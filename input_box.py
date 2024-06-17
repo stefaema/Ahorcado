@@ -53,7 +53,7 @@ class InputBox:
         self.txt_surface = self.font.render(text, True, self.color)
         self.blink_factor = 15
         self.blink_counter= 0
-        self.secure_text_entry = False
+        self.secure_text_entry = True
         self.raw_text_surface = self.font.render(text, True, self.color)
     def set_secure_text_entry(self, secure_text_entry):
         self.secure_text_entry = secure_text_entry

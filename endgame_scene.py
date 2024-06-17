@@ -2,7 +2,7 @@ import pygame
 from scene import Scene
 from button import Button
 class   EndGameScene:
-    def __init__(self,sound_mixer,screen,character,did_win):
+    def __init__(self,sound_mixer,screen,character,did_win,secret_word):
         self.character = character
         self.sound_mixer = sound_mixer
         self.did_win = did_win
@@ -15,6 +15,11 @@ class   EndGameScene:
         self.text = "¡Ganaste!" if self.did_win else "¡Perdiste!"
         self.text_surface = pygame.font.Font(self.font_path, 48).render(self.text, True, (0, 0, 0))
         self.text_rect = self.text_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 8))
+
+        self.text_word = f"La palabra era {secret_word}"
+        self.text_word_surface = pygame.font.Font(self.font_path, 48).render(self.text_word, True, (0, 0, 0))
+        self.text_word_rect = self.text_word_surface.get_rect(center=(screen.get_width() // 2, screen.get_height() // 4))
+
 
         self.re_play_button_images = ['Images/Props/replay_idle.png', 'Images/Props/replay_hover.png', 'Images/Props/replay_pressed.png']
         self.re_play_button_images = [pygame.image.load(image) for image in self.re_play_button_images]
@@ -32,7 +37,7 @@ class   EndGameScene:
     def draw(self):
         self.screen.blit(self.background, (0, 0))
         self.screen.blit(self.text_surface, self.text_rect)
-
+        self.screen.blit(self.text_word_surface, self.text_word_rect)
         self.character.draw()
 
         if self.re_play_button.draw(self.screen):

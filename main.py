@@ -25,7 +25,7 @@ sound_mixer =   SoundMixer()
 is_game_running = True
 
 current_scene = LoadingScene(screen,sound_mixer, clock, 2)
-#urrent_scene = WordPickScene(screen,sound_mixer)
+
 
 while is_game_running:
 

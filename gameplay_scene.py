@@ -27,10 +27,10 @@ class GameplayScene(Scene):
         self.current_word = self.keyboard.get_current_word()
         if self.keyboard.did_win():
             self.sound_mixer.fade_out("Dying Adventure", 250)
-            return EndGameScene(self.sound_mixer, self.screen, self.character, True)
+            return EndGameScene(self.sound_mixer, self.screen, self.character, True, self.secret_word)
         if self.character.did_lose():
             self.sound_mixer.fade_out("Dying Adventure", 250)
-            return EndGameScene(self.sound_mixer, self.screen, self.character, False)
+            return EndGameScene(self.sound_mixer, self.screen, self.character, False, self.secret_word)
     def draw(self):
         self.screen.blit(self.background, (0, 0))
         smth_incorrect_happnd, smth_correct_happnd = self.keyboard.draw()

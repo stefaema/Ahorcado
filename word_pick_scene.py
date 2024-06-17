@@ -28,7 +28,8 @@ class WordPickScene(Scene):
         image = pygame.transform.scale(image, (int(image.get_width() * 0.6) + 100, int(image.get_height() * 0.6)))
         self.input_box = InputBox(image, (screen.get_width() // 2 + 150, screen.get_height() // 2))
 
-        self.lever_images = ['Images/Props/pass_off.png', 'Images/Props/pass_on.png', 'Images/Props/pass_off_on.png', 'Images/Props/pass_on_off.png']
+        self.lever_images = ['Images/Props/pass_on.png', 'Images/Props/pass_off.png', 'Images/Props/pass_on_off.png', 'Images/Props/pass_off_on.png']
+        #self.lever_images = ['Images/Props/pass_off.png', 'Images/Props/pass_on.png', 'Images/Props/pass_off_on.png', 'Images/Props/pass_on_off.png']
         self.lever_images = [pygame.image.load(image) for image in self.lever_images]
         self.lever = Lever(screen.get_width()//3+90,2* screen.get_height() // 4 - 50, *self.lever_images, 0.35)
 
@@ -63,7 +64,7 @@ class WordPickScene(Scene):
         self.screen.fill((204, 236, 239))
         self.screen.blit(self.text_surface, self.text_rect)
         self.input_box.draw(self.screen)
-        self.input_box.set_secure_text_entry(self.lever.toggled())
+        self.input_box.set_secure_text_entry(not self.lever.toggled())
         
 
         self.warning_surface = self.font_warning.render(self.warning_text, True, (255, 0, 0))
