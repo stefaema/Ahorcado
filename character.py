@@ -14,7 +14,7 @@ class CharacterState:
 
 class Character:
     # Optimized for Hango
-    def __init__(self, screen, healthLost=0, states=7, delayPerFrame=15, position=(923, 556), hangmanScale=0.6):
+    def __init__(self, screen, healthLost=0, states=7, delayPerFrame=15, position=(923, 556), hangmanScale=0.7):
         self.healthLost = healthLost
         self.states = [CharacterState(screen, delayPerFrame, f"Images/HangMan{i}/HangMan{i}.png", position, hangmanScale) for i in range(states)]
 
@@ -26,3 +26,5 @@ class Character:
     def draw(self):
         self.states[self.healthLost].draw()
 
+    def did_lose(self):
+        return self.healthLost == len(self.states) - 1

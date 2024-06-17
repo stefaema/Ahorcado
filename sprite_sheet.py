@@ -41,9 +41,12 @@ class SpriteSheet:
         cell_images = []
         # Creates a surface for each sprite in the sprite sheet
         for sprite_location in self.sprite_locations:
-            cell_images.append(self.surface_generator(sprite_location))
+            cell_surface = self.surface_generator(sprite_location)
+            cell_surface.set_colorkey((0, 0, 0))  # Set colorkey to black (RGB value: 0, 0, 0)
+            cell_surface = cell_surface.convert_alpha()
             if scale != 1:
-                cell_images[-1] = pygame.transform.scale(cell_images[-1], (int(self.cell_width * scale), int(self.cell_height * scale)))
+                cell_surface = pygame.transform.scale(cell_surface, (int(self.cell_width * scale), int(self.cell_height * scale)))
+            cell_images.append(cell_surface)
         return cell_images
     
     def surface_generator(self, sprite_location):

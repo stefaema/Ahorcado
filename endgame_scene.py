@@ -18,7 +18,7 @@ class   EndGameScene:
 
         self.re_play_button_images = ['Images/Props/replay_idle.png', 'Images/Props/replay_hover.png', 'Images/Props/replay_pressed.png']
         self.re_play_button_images = [pygame.image.load(image) for image in self.re_play_button_images]
-        self.re_play_button = Button(1*screen.get_width() // 4, 3*screen.get_height() // 4, *self.re_play_button_images, 0.6)
+        self.re_play_button = Button(1*screen.get_width() // 4, 6*screen.get_height() // 7, *self.re_play_button_images, 0.6)
 
         self.ready_for_next_scene = False
         

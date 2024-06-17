@@ -22,30 +22,29 @@ class PressedState(ButtonState):
 class Button():
     def __init__(self, x, y, idle_image, hover_image, pressed_image, scale):
         self.state = IdleState()
+        self.mouse_exited_after_click = False
         self.idle_image = idle_image
-        self.clicked = False
         self.hover_image = hover_image
         self.pressed_image = pressed_image
-        self.rect = self.idle_image.get_rect(center = (x,y))
-        self.image = self.idle_image
         self.preProcessImages(scale,x,y)
-         
-        
+        self.clicked = False
+        self.rect = self.idle_image.get_rect(center = (x,y))
 
     def preProcessImages(self, scale,x,y):
-        width = idle_image.get_width()
-        height = idle_image.get_height()
-        idle_image = pygame.transform.scale(idle_image, (int(width * scale), int(height * scale)))
-        hover_image = pygame.transform.scale(hover_image, (int(width * scale), int(height * scale)))
-        pressed_image = pygame.transform.scale(pressed_image, (int(width * scale), int(height * scale)))
-        idle_image.set_colorkey((0,0,0))
-        hover_image.set_colorkey((0,0,0))
-        pressed_image.set_colorkey((0,0,0))
-        rect = self.image.get_rect(center = (x,y))
+
+        width = self.idle_image.get_width()
+        height = self.idle_image.get_height()
+        self.idle_image = pygame.transform.scale(self.idle_image, (int(width * scale), int(height * scale)))
+        self.hover_image = pygame.transform.scale(self.hover_image, (int(width * scale), int(height * scale)))
+        self.pressed_image = pygame.transform.scale(self.pressed_image, (int(width * scale), int(height * scale)))
+        self.idle_image.set_colorkey((0,0,0))
+        self.hover_image.set_colorkey((0,0,0))
+        self.pressed_image.set_colorkey((0,0,0))
 
     def draw(self, surface):
         action = False
-        if self.isMouseOver():
+        mouse_over = self.isMouseOver()
+        if mouse_over:
             if self.isMousePressed() and not self.clicked:
                 self.state = PressedState()
                 action = True

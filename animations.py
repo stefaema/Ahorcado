@@ -44,7 +44,7 @@ class Animation:
         self.delay_counter = 0
         self.delay_per_frame = delay_per_frame
         self.sprite_sheet = sprite_sheet
-        self.animation_frames = self.sprite_sheet.get_images()
+        self.animation_frames = self.sprite_sheet.get_images(scale)
         self.x, self.y = initial_pos
         self.movement_strategy = moving_strategy if moving_strategy else LinearStraightMovementStrategy(initial_pos, final_pos, moving_time)
 
