@@ -28,7 +28,7 @@ jobs:
 
       - name: Run tests with unittest
         run: |
-          python -m unittest discover -s tests
+          python -m unittest discover -s tests -p "*_test.py"
 
       - name: Set failure flag if tests fail
         if: ${{ steps.run-tests.outcome == 'failure' }}
