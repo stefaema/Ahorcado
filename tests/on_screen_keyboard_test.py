@@ -78,45 +78,51 @@ class TestKeyboardOnScreen(unittest.TestCase):
         self.assertFalse(incorrect_action)
         self.assertFalse(correct_action)
 
-    # def test_draw_incorrect_key(self):
-    #     # Simulate an incorrect key press
-    #     incorrect_key = MagicMock()  # Ensure this is a mock object
-    #     incorrect_key.draw = MagicMock(return_value=True)  # Mock the draw method
+    def test_draw_incorrect_key(self):
+        for key in self.drawable_keyboard.keys:
+            key.draw = MagicMock(return_value = False)
+        self.drawable_keyboard.incorrect_keys[0].draw = MagicMock(return_value = True)
+        self.drawable_keyboard.print_object_attributes()
 
-    #     incorrect_action, correct_action = self.drawable_keyboard.draw()
+        incorrect_action, correct_action = self.drawable_keyboard.draw()
         
-    #     # Assert that an incorrect action was registered
-    #     self.assertTrue(incorrect_action)
-    #     self.assertFalse(correct_action)
+        # Assert that an incorrect action was registered
+        self.assertTrue(incorrect_action)
+        self.assertFalse(correct_action)
         
-    #     # Assert that the mistakes count has been incremented
-    #     self.assertEqual(self.drawable_keyboard.mistakes, 1)
+        # Assert that the mistakes count has been incremented
+        self.assertEqual(self.drawable_keyboard.mistakes, 1)
 
-    # def test_draw_correct_key(self):
-    #     # Simulate a correct key press
-    #     correct_key = next(key for key in self.keyboard.correct_keys if key.get_letter() == 'S')
-    #     correct_key.draw.return_value = True
+    def test_draw_correct_key(self):
+        # Simulate a correct key press
+        for key in self.drawable_keyboard.keys:
+            key.draw = MagicMock(return_value = False)
+        for key in self.drawable_keyboard.incorrect_keys:
+            key.draw = MagicMock(return_value = False)
+        self.drawable_keyboard.correct_keys[0].draw = MagicMock(return_value = True)
+        with patch.object(KeyboardOnScreen,'update_current_word', return_value = MagicMock()):
+            incorrect_action, correct_action = self.drawable_keyboard.draw()
+            self.assertFalse(incorrect_action)
+            self.assertTrue(correct_action)
+            self.drawable_keyboard.update_current_word.assert_called_once()
 
-    #     incorrect_action, correct_action = self.keyboard.draw()
-    #     self.assertFalse(incorrect_action)
-    #     self.assertTrue(correct_action)
-    #     self.assertIn(" S ", self.keyboard.get_current_word())
+    def test_did_win(self):
+        # Simulate guessing all correct keys
+        for key in self.drawable_keyboard.correct_keys:
+            self.drawable_keyboard.update_current_word(key)
+        self.drawable_keyboard.print_object_attributes()
+        self.assertTrue(self.drawable_keyboard.did_win())
 
-    # def test_did_win(self):
-    #     # Simulate guessing all correct keys
-    #     for key in self.keyboard.correct_keys:
-    #         if key.get_letter() in 'SECRET':
-    #             key.static = True
+    def test_did_not_win(self):
+        # Simulate an incomplete guess of the secret word
+        i = 0
+        for key in self.keyboard.correct_keys:
+            if i == 0:
+                i += 1
+                continue
+            self.keyboard.update_current_word(key)
 
-    #     self.assertTrue(self.keyboard.did_win())
-
-    # def test_did_not_win(self):
-    #     # Simulate an incomplete guess of the secret word
-    #     for key in self.keyboard.correct_keys:
-    #         if key.get_letter() in 'SECRE':
-    #             key.static = True
-
-    #     self.assertFalse(self.keyboard.did_win())
+        self.assertFalse(self.keyboard.did_win())
 
     def test_handle_mistakes(self):
         self.keyboard.mistakes = 1

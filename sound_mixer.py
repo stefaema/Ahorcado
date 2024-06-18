@@ -10,8 +10,10 @@ class SingletonMeta(type):
 
 class SoundMixer(metaclass=SingletonMeta):
     def __init__(self):
+        
         # Inicializa solo si no se ha inicializado antes
         if not hasattr(self, 'sounds'):
+
             self.sounds = {
                 "Stepping On Grass": pygame.mixer.Sound('Sounds/steppingOnGrass.wav'),
                 "Button Click": pygame.mixer.Sound('Sounds/click_button.mp3'),
@@ -35,8 +37,3 @@ class SoundMixer(metaclass=SingletonMeta):
     def fade_out(self, track, time):
         self.sounds[track].fadeout(time)
 
-if __name__ == "__main__":
-    pygame.init()
-    mixer1 = SoundMixer()
-    mixer2 = SoundMixer()
-    print(mixer1 is mixer2)  # Esto debería imprimir True, demostrando que ambas variables apuntan a la misma instancia.

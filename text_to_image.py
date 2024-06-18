@@ -1,6 +1,24 @@
 import pygame
 class TextToImageTool:
+    def validate_params(self, x, y, text, font_path, font_size, font_color, background_surface, line_spacing):
+        if not isinstance(x, int):
+            raise ValueError("x must be an integer")
+        if not isinstance(y, int):
+            raise ValueError("y must be an integer")
+        if not isinstance(text, str):
+            raise ValueError("text must be a string")
+        if not isinstance(font_path, str):
+            raise ValueError("font_path must be a string")
+        if not isinstance(font_size, int):
+            raise ValueError("font_size must be an integer")
+        if not isinstance(font_color, tuple):
+            raise ValueError("font_color must be a tuple")
+        if not isinstance(background_surface, pygame.Surface) and background_surface is not None:
+            raise ValueError("background_surface must be a pygame.Surface or None")
+        if not isinstance(line_spacing, int):
+            raise ValueError("line_spacing must be an integer")
     def __init__(self, x, y, text, font_path, font_size, font_color, background_surface=None, line_spacing=4):
+        self.validate_params(x, y, text, font_path, font_size, font_color, background_surface, line_spacing)
         self.text = text
         self.x = x
         self.y = y
@@ -40,11 +58,11 @@ class TextToImageTool:
         # Calcula la altura total del texto con el espacio entre líneas
         total_height = (line_height + self.line_spacing) * len(lines) - self.line_spacing
         # Calcula el ancho total del texto, basado en la línea más larga
-        total_width = max([self.font.size(line)[0] for line in lines])
+        total_width = max([self.font.size(line)[0] for line in lines],default=0)
         
         # Crea una superficie con capacidad para transparencia
         image = self.background_surface.copy() if self.background_surface else pygame.Surface((total_width, total_height), pygame.SRCALPHA)
-        image = pygame.transform.scale(image, (int(image.get_width()*background_scale), int(image.get_height()*background_scale)))
+        image = self.scale_image(image, (int(image.get_width()*background_scale), int(image.get_height()*background_scale)))
         for i, line in enumerate(lines):
             # Renderiza cada línea de texto
             line_surface = self.font.render(line, True, self.font_color)
@@ -59,7 +77,8 @@ class TextToImageTool:
         
         return image
 
-
+    def scale_image(self, image, scale):
+        return pygame.transform.scale(image, scale)
 def main():
     pygame.init()
 

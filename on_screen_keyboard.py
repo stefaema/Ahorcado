@@ -56,7 +56,6 @@ class KeyboardOnScreen:
     def create_key(self, x, y, key, font_path, font_size, initial_color, transition_color, final_color, image_background, scale):
         return KeyOnScreen(x, y, key, font_path, font_size, initial_color, transition_color, final_color, image_background, scale)
     def print_object_attributes(self):
-        print("Keys: ", self.keys)
         print("Correct Keys: ", len(self.correct_keys))
         print("Incorrect Keys: ", len(self.incorrect_keys))
         print("Secret Word: ", self.secret_word)
@@ -71,10 +70,12 @@ class KeyboardOnScreen:
             if action:
                 self.mistakes += 1
                 incorrect_action = True
+                print("Se apretó una tecla incorrecta ", inc_key.get_letter())
                 
         for cor_key in self.correct_keys:
             action = cor_key.draw(self.screen)
             if action:
+                print("Se apretó una tecla correcta ", inc_key.get_letter())
                 self.update_current_word(cor_key)
                 correct_action = True
         return incorrect_action , correct_action
@@ -87,6 +88,7 @@ class KeyboardOnScreen:
 
     def get_current_word(self):
         return "".join(self.current_word)
+    
     def did_win(self):
         current_word=self.get_current_word().upper()
         current_word = current_word.replace(" ","")

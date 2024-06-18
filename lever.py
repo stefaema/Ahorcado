@@ -22,14 +22,6 @@ class OffState(LeverState):
         return False
 
 class Lever:
-    def __init__(self, x, y, off_image, on_image, hover_off_image,hover_on_image, scale):
-        self.validate_parameters(x, y, off_image, on_image, hover_off_image, hover_on_image, scale)
-        self.onState = OnState()
-        self.offState = OffState()
-        self.state = self.offState
-        self.on_off_button = self.create_button(x, y, on_image, hover_on_image, off_image, scale)
-        self.off_on_button = self.create_button(x, y, off_image, hover_off_image, on_image, scale)
-
     def validate_parameters(self, x, y, off_image, on_image, hover_off_image, hover_on_image, scale):
         if not isinstance(x, (int, float)):
             raise ValueError("x must be an integer or float")
@@ -39,6 +31,16 @@ class Lever:
             raise ValueError("Image parameters must be pygame.Surface objects")
         if not isinstance(scale, (int, float)) or scale <= 0:
             raise ValueError("scale must be a positive integer or float")
+        
+    def __init__(self, x, y, off_image, on_image, hover_off_image,hover_on_image, scale):
+        self.validate_parameters(x, y, off_image, on_image, hover_off_image, hover_on_image, scale)
+        self.onState = OnState()
+        self.offState = OffState()
+        self.state = self.offState
+        self.on_off_button = self.create_button(x, y, on_image, hover_on_image, off_image, scale)
+        self.off_on_button = self.create_button(x, y, off_image, hover_off_image, on_image, scale)
+
+
         
     def create_button(self, x, y, idle,hover,pressed, scale):
         return Button(x, y, idle,hover,pressed, scale)
