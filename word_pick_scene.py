@@ -29,14 +29,14 @@ class WordPickScene(Scene):
         self.input_box = InputBox(image, (screen.get_width() // 2 + 150, screen.get_height() // 2))
 
         self.lever_images = ['Images/Props/pass_on.png', 'Images/Props/pass_off.png', 'Images/Props/pass_on_off.png', 'Images/Props/pass_off_on.png']
-        #self.lever_images = ['Images/Props/pass_off.png', 'Images/Props/pass_on.png', 'Images/Props/pass_off_on.png', 'Images/Props/pass_on_off.png']
+
         self.lever_images = [pygame.image.load(image) for image in self.lever_images]
         self.lever = Lever(screen.get_width()//3+90,2* screen.get_height() // 4 - 50, *self.lever_images, 0.35)
 
         self.executioner_sprite_sheet=SpriteSheet("320x320","Images/Executioner/Executioner.png")
         initial_pos = ((self.screen.get_width() -1)//3+100, (self.screen.get_height() -1)*2//3)
         final_pos = ((self.screen.get_width() -1)*3//3 +100, (self.screen.get_height() -1)//2)
-        self.executioner_animation = Animation(screen, 20, self.executioner_sprite_sheet, initial_pos, final_pos, 1, NoMovementStrategy(), 0.7)
+        self.executioner_animation = Animation(screen, 20, self.executioner_sprite_sheet, NoMovementStrategy(initial_pos), 0.7)
 
         play_button_images = ['Images/Props/play_idle.png', 'Images/Props/play_hover.png', 'Images/Props/play_pressed.png']
         play_button_images = [pygame.image.load(image) for image in play_button_images]

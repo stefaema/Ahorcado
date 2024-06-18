@@ -42,7 +42,7 @@ class TestSpriteSheet(unittest.TestCase):
         with patch.object(SpriteSheet, 'image_loader', return_value=pygame.Surface((128, 32))):
             spriteSheet = SpriteSheet("32x32", MagicMock())
         spriteSheet.calculate_sprite_locations()
-        with patch.object(SpriteSheet, 'surface_generator', return_value=pygame.Surface((32, 32))):
+        with patch.object(SpriteSheet, 'surface_generator', return_value=MagicMock()):
             self.assertEqual(len(spriteSheet.get_images()), 4)
 
     def test_raise_parameter_value_error(self):

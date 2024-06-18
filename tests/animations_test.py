@@ -1,18 +1,20 @@
 import sys
 import os
+import pygame
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from animations import Animation, LinearStraightMovementStrategy
 
 import unittest
 
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 class TestAnimation(unittest.TestCase):
     def setUp(self):
-        self.screen = MagicMock()
-        self.sprite_sheet = MagicMock()
-        self.sprite_sheet.get_images.return_value = [MagicMock() for _ in range(5)]
-        self.animation = Animation(self.screen, 10, self.sprite_sheet, (0, 0), (100, 100), 1)
+        with patch.object(Animation, 'validate_parameters', return_value=None):
+            self.screen = MagicMock()
+            self.sprite_sheet = MagicMock()
+            self.sprite_sheet.get_images.return_value = [MagicMock() for _ in range(5)]
+            self.animation = Animation(self.screen, 10, self.sprite_sheet, LinearStraightMovementStrategy((0,0),(100, 100), 1), 1)
 
     def test_update_frame(self):
         self.animation.movement_strategy= MagicMock()
@@ -34,7 +36,28 @@ class TestAnimation(unittest.TestCase):
         self.animation.y = 10
         self.animation.draw()
         self.screen.blit.assert_called_once()
-        
+    
+
+    def test_validate_parameters_wrong_screen_type(self):
+        with self.assertRaises(ValueError):
+            Animation("Not a surface", 10, self.sprite_sheet, LinearStraightMovementStrategy((0,0),(100, 100), 1), 1)
+
+    def test_validate_parameters_negative_delay(self):
+        with self.assertRaises(ValueError):
+            Animation(self.screen, -1, self.sprite_sheet, LinearStraightMovementStrategy((0,0),(100, 100), 1), 1)
+
+    def test_validate_parameters_wrong_sprite_sheet_type(self):
+        with self.assertRaises(ValueError):
+            Animation(self.screen, -1, "not a sprite_sheet", LinearStraightMovementStrategy((0,0),(100, 100), 1), 1)
+
+    def test_validate_parameters_wrong_moving_strategy_type(self):
+        with self.assertRaises(ValueError):
+            Animation(self.screen, -1, self.sprite_sheet, "not a movement strategy", 1)
+
+    def test_validate_parameters_wrong_scale_type(self):
+        with self.assertRaises(ValueError):
+            Animation(self.screen, -1, self.sprite_sheet, LinearStraightMovementStrategy((0,0),(100, 100), 1), "not a scale")
+
         
 
 class TestLinearStraightMovementStrategy(unittest.TestCase):

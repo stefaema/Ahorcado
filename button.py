@@ -20,7 +20,22 @@ class PressedState(ButtonState):
 
 
 class Button():
+    def validate_parameters(self, x, y, idle_image, hover_image, pressed_image, scale):
+        if not isinstance(idle_image, pygame.Surface):
+            raise ValueError("Idle image must be a pygame.Surface object")
+        if not isinstance(hover_image, pygame.Surface):
+            raise ValueError("Hover image must be a pygame.Surface object")
+        if not isinstance(pressed_image, pygame.Surface):
+            raise ValueError("Pressed image must be a pygame.Surface object")
+        if not isinstance(scale, (int, float)):
+            raise ValueError("Scale must be an integer or a float")
+        if not isinstance(x, int):
+            raise ValueError("x must be an integer")
+        if not isinstance(y, int):
+            raise ValueError("y must be an integer")
+        
     def __init__(self, x, y, idle_image, hover_image, pressed_image, scale):
+        self.validate_parameters(x, y, idle_image, hover_image, pressed_image, scale)
         self.state = IdleState()
         self.mouse_exited_after_click = False
         self.idle_image = idle_image

@@ -46,7 +46,8 @@ class TestTextToImageTool(unittest.TestCase):
         self.assertIsInstance(image, pygame.Surface)
 
     # def test_get_image_with_background(self):
-    #     image = self.text_tool.get_image()
+    #     with patch('pygame.Surface.blit') as mock_blit:
+    #         image = self.text_tool.get_image()
     #     self.assertIsInstance(image, pygame.Surface)
 
     # def test_get_image_scaled(self):

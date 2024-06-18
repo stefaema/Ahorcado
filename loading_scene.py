@@ -1,6 +1,6 @@
 import pygame
 from scene import Scene
-from animations import Animation
+from animations import Animation, LinearStraightMovementStrategy
 from sprite_sheet import SpriteSheet
 from main_menu_scene import MainMenuScene
 import time
@@ -18,7 +18,7 @@ class LoadingScene(Scene):
         initial_pos = ((self.screen.get_width() -1)//4, (self.screen.get_height() -1)//2)
         final_pos = ((self.screen.get_width() -1)*3//4, (self.screen.get_height() -1)//2)
         delay_per_frame = loading_time * FRAME_PER_SECOND // 8
-        self.animation = Animation(self.screen, delay_per_frame , SpriteSheet("320x320","Images/HangManWalking/HangManWalking.png"), initial_pos, final_pos, loading_time, scale=0.8)
+        self.animation = Animation(self.screen, delay_per_frame , SpriteSheet("320x320","Images/HangManWalking/HangManWalking.png"),LinearStraightMovementStrategy(initial_pos, final_pos, loading_time), scale=0.8)
         self.initial_time = time.time()
         self.sound_mixer = sound_mixer
         self.sound_mixer.play("Stepping On Grass")

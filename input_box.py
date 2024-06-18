@@ -1,14 +1,18 @@
 import pygame
 from button import Button
 import unicodedata
-class verification_strategy:
+from abc import ABC, abstractmethod
+class VerificationStrategy(ABC):
+    @abstractmethod
     def verify(input_box):
         pass
+    @abstractmethod
     def criteria():
         pass
-class standard_verification_strategy(verification_strategy):
-    
-    def verify(input_box):
+class StandardVerificationStrategy(VerificationStrategy):
+    def __init__ (self):
+        pass
+    def verify(self,input_box):
         def eliminar_acentos(texto):
             texto = texto.replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u')
             texto = texto.replace('Á', 'A').replace('É', 'E').replace('Í', 'I').replace('Ó', 'O').replace('Ú', 'U')
@@ -30,12 +34,29 @@ class standard_verification_strategy(verification_strategy):
         
         input_box.text = texto_sin_acentos
         return True
-    def criteria():
+    
+    def criteria(self):
         return "Solo una palabra, sin espacios ni caracteres especiales"
 
-class InputBox:
 
-    def __init__(self, image, pos_center, text='', verification_strategy=standard_verification_strategy):
+class InputBox:
+    def validate_parameters(self,image, pos_center, text, verification_strategy):
+
+        if not isinstance(image, pygame.Surface):
+            raise ValueError("image must be a pygame.Surface")
+        if not isinstance(pos_center, tuple):
+            raise ValueError("pos_center must be a tuple")
+        if not isinstance(text, str):
+            raise ValueError("text must be a string")
+        if not isinstance(verification_strategy, VerificationStrategy):
+            raise ValueError("verification_strategy must be a verification_strategy")
+        if not callable(verification_strategy.verify):
+            raise ValueError("verification_strategy must have a verify method")
+        if not callable(verification_strategy.criteria):
+            raise ValueError("verification_strategy must have a criteria method")
+        
+    def __init__(self, image, pos_center, text='', verification_strategy=StandardVerificationStrategy()):
+        self.validate_parameters(image, pos_center, text, verification_strategy)
         self.normal_image = image
         self.image = self.normal_image
         self.rect = self.image.get_rect(center=pos_center)

@@ -51,14 +51,18 @@ class TestKeyOnScreen(unittest.TestCase):
 
 class TestKeyboardOnScreen(unittest.TestCase):
     def setUp(self):
+        # Patch the create_key method
+
         with patch.object(KeyboardOnScreen,'create_key',return_value = MagicMock()):
-            
             # Mock the images returned by TextToImageTool
             mock_image = MagicMock()
-
             # Create an instance of KeyboardOnScreen
             self.screen = MagicMock()
+            
             self.keyboard = KeyboardOnScreen(self.screen, 'mock_font_path', mock_image, 'SECRET', 1)
+        
+        with patch.object(KeyOnScreen,'create_image', return_value = MagicMock()), patch.object(KeyOnScreen,'create_button', return_value = MagicMock()):
+            self.drawable_keyboard = KeyboardOnScreen(self.screen, 'mock_font_path', mock_image, 'SECRET', 1)
 
     def test_initial_state(self):
         self.assertEqual(len(self.keyboard.keys), 27)  # 27 letters in the Spanish alphabet
@@ -76,15 +80,17 @@ class TestKeyboardOnScreen(unittest.TestCase):
 
     # def test_draw_incorrect_key(self):
     #     # Simulate an incorrect key press
-    #     incorrect_key = self.keyboard.incorrect_keys[0]
-    #     incorrect_key.draw.return_value = True
-    #     print(incorrect_key.draw.return_value)
-    #     print(self.keyboard.mistakes)
+    #     incorrect_key = MagicMock()  # Ensure this is a mock object
+    #     incorrect_key.draw = MagicMock(return_value=True)  # Mock the draw method
 
-    #     incorrect_action, correct_action = self.keyboard.draw()
+    #     incorrect_action, correct_action = self.drawable_keyboard.draw()
+        
+    #     # Assert that an incorrect action was registered
     #     self.assertTrue(incorrect_action)
     #     self.assertFalse(correct_action)
-    #     self.assertEqual(self.keyboard.mistakes, 1)
+        
+    #     # Assert that the mistakes count has been incremented
+    #     self.assertEqual(self.drawable_keyboard.mistakes, 1)
 
     # def test_draw_correct_key(self):
     #     # Simulate a correct key press

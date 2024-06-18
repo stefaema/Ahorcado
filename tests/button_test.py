@@ -9,8 +9,8 @@ from button import Button
 
 class TestButton(unittest.TestCase):
     def setUp(self):
-        with patch.object(Button, 'preProcessImages', return_value=None):
-            pygame.init()
+        pygame.init()
+        with patch.object(Button, 'preProcessImages', return_value=None), patch.object(Button, 'validate_parameters', return_value=None):
             self.button = Button(0, 0, MagicMock(), MagicMock(), MagicMock(), 1)
             self.button.preProcessImages = MagicMock()
 
@@ -48,6 +48,39 @@ class TestButton(unittest.TestCase):
         self.assertFalse(self.button.clicked)
         self.assertEqual(self.button.image, self.button.idle_image)
         self.assertFalse(actionToDo)
+
+    def test_correct_init(self):
+        surface = pygame.surface.Surface((1,1))
+        try:
+            button = Button(0, 0, surface, surface, surface, 1)
+        except ValueError:
+            self.fail("Button constructor raised ValueError unexpectedly!")
+    def test_incorrect_init_scale(self):
+        surface = pygame.surface.Surface((1,1))
+        with self.assertRaises(ValueError):
+            button = Button(0, 0, surface, surface, surface, surface)
+    def test_incorrect_init_x(self):
+        surface = pygame.surface.Surface((1,1))
+        with self.assertRaises(ValueError):
+            button = Button("0", 0, surface, surface, surface, 1)
+    def test_incorrect_init_y(self):
+        surface = pygame.surface.Surface((1,1))
+        with self.assertRaises(ValueError):
+            button = Button(0, "0", surface, surface, surface, 1)
+    def test_incorrect_init_idle_image(self):
+        surface = pygame.surface.Surface((1,1))
+        with self.assertRaises(ValueError):
+            button = Button(0, 0, "surface", surface, surface, 1)
+    def test_incorrect_init_hover_image(self):
+        surface = pygame.surface.Surface((1,1))
+        with self.assertRaises(ValueError):
+            button = Button(0, 0, surface, "surface", surface, 1)
+    def test_incorrect_init_pressed_image(self):
+        surface = pygame.surface.Surface((1,1))
+        with self.assertRaises(ValueError):
+            button = Button(0, 0, surface, surface, "surface", 1)
+
+        
 
 if __name__ == '__main__':
     unittest.main()

@@ -55,7 +55,14 @@ class KeyboardOnScreen:
 
     def create_key(self, x, y, key, font_path, font_size, initial_color, transition_color, final_color, image_background, scale):
         return KeyOnScreen(x, y, key, font_path, font_size, initial_color, transition_color, final_color, image_background, scale)
-    
+    def print_object_attributes(self):
+        print("Keys: ", self.keys)
+        print("Correct Keys: ", len(self.correct_keys))
+        print("Incorrect Keys: ", len(self.incorrect_keys))
+        print("Secret Word: ", self.secret_word)
+        print("Current Word: ", self.current_word)
+        print("Mistakes: ", self.mistakes)
+
     def draw(self):
         incorrect_action = False
         correct_action = False
@@ -64,12 +71,12 @@ class KeyboardOnScreen:
             if action:
                 self.mistakes += 1
                 incorrect_action = True
+                
         for cor_key in self.correct_keys:
             action = cor_key.draw(self.screen)
             if action:
                 self.update_current_word(cor_key)
                 correct_action = True
-                print('paso algo raro' , cor_key.get_letter())
         return incorrect_action , correct_action
 
 

@@ -1,5 +1,6 @@
 import pygame
 from abc import ABC, abstractmethod
+from sprite_sheet import SpriteSheet
 
 class MovementStrategy(ABC):
     @abstractmethod
@@ -7,14 +8,15 @@ class MovementStrategy(ABC):
         pass
 
 class NoMovementStrategy(MovementStrategy):
-    def __init__(self):
-        pass
+    def __init__(self, initial_pos):
+        self.initial_pos = initial_pos
     def update_position(self, animation):
         animation.x = animation.x
         animation.y = animation.y
 
 class LinearStraightMovementStrategy(MovementStrategy):
     def __init__(self, initial_pos, final_pos, moving_time):
+        self.initial_pos = initial_pos
         self.updates_done = 0
         self.x_per_update, self.y_per_update, self.total_updates = self.calculate_updates(initial_pos, final_pos, moving_time)
 
@@ -38,15 +40,27 @@ class LinearStraightMovementStrategy(MovementStrategy):
 
 
 class Animation:
-    def __init__(self, screen, delay_per_frame, sprite_sheet, initial_pos, final_pos, moving_time, moving_strategy=None, scale=1):
+    def validate_parameters(self, screen, delay_per_frame, sprite_sheet, moving_strategy, scale):
+        if not isinstance(screen, pygame.Surface):
+            raise ValueError("screen must be a pygame.Surface object")
+        if not isinstance(delay_per_frame, int) or delay_per_frame <= 0:
+            raise ValueError("delay_per_frame must be a positive integer")
+        if not isinstance(sprite_sheet, SpriteSheet):
+            raise ValueError("sprite_sheet must be a SpriteSheet object")
+        if not isinstance(moving_strategy, MovementStrategy):
+            raise ValueError("moving_strategy must implement the MovementStrategy interface")
+        if not isinstance(scale, (int, float)) or scale <= 0:
+            raise ValueError("scale must be a positive integer or float")
+    def __init__(self, screen, delay_per_frame, sprite_sheet, moving_strategy, scale=1):
+        self.validate_parameters(screen, delay_per_frame, sprite_sheet, moving_strategy, scale)
         self.screen = screen
         self.current_frame = 0
         self.delay_counter = 0
         self.delay_per_frame = delay_per_frame
         self.sprite_sheet = sprite_sheet
         self.animation_frames = self.sprite_sheet.get_images(scale)
-        self.x, self.y = initial_pos
-        self.movement_strategy = moving_strategy if moving_strategy else LinearStraightMovementStrategy(initial_pos, final_pos, moving_time)
+        self.x, self.y = moving_strategy.initial_pos
+        self.movement_strategy = moving_strategy
 
     def update_frame(self):
         if self.delay_counter % self.delay_per_frame == 0:
