@@ -31,6 +31,7 @@ class   EndGameScene:
     def handle_event(self, events):
         pass
     def update(self):
+        self.character.update()
         if self.ready_for_next_scene:
 
             return self.new_round()
