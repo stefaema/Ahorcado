@@ -70,12 +70,10 @@ class KeyboardOnScreen:
             if action:
                 self.mistakes += 1
                 incorrect_action = True
-                print("Se apretó una tecla incorrecta ", inc_key.get_letter())
                 
         for cor_key in self.correct_keys:
             action = cor_key.draw(self.screen)
             if action:
-                print("Se apretó una tecla correcta ", inc_key.get_letter())
                 self.update_current_word(cor_key)
                 correct_action = True
         return incorrect_action , correct_action
