@@ -17,11 +17,12 @@ class TestLoadingScene(unittest.TestCase):
         self.assertEqual(self.loading_scene.loading_time, 2)
         self.assertEqual(self.loading_scene.delay_per_frame, 6)
     def test_update(self):
-        self.loading_scene.update()
-        self.sound_mixer.stop.assert_not_called()
-        self.assertEqual(self.loading_scene.animation.update.call_count, 1)
+        with patch.object(LoadingScene, 'change_animation'):
+            self.loading_scene.update()
+            self.sound_mixer.stop.assert_not_called()
+            self.assertEqual(self.loading_scene.animation.update.call_count, 1)
     def test_update_return(self):
-        with patch.object(LoadingScene, 'get_elapsed_time', return_value=self.loading_scene.loading_time + 1), patch.object(LoadingScene, 'return_next_scene', return_value=MagicMock()):
+        with patch.object(LoadingScene, 'get_elapsed_time', return_value=self.loading_scene.loading_time + 1), patch.object(LoadingScene, 'return_next_scene', return_value=MagicMock()), patch.object(LoadingScene, 'change_animation') as change_animation:
             return_value = self.loading_scene.update()
             self.sound_mixer.stop.assert_called_once()
             self.loading_scene.return_next_scene.assert_called_once()

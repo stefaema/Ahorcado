@@ -40,7 +40,7 @@ class LinearStraightMovementStrategy(MovementStrategy):
 
 
 class Animation:
-    def validate_parameters(self, screen, delay_per_frame, sprite_sheet, moving_strategy, scale):
+    def validate_parameters(self, screen, delay_per_frame, sprite_sheet, moving_strategy, scale, loop):
         if not isinstance(screen, pygame.Surface):
             raise ValueError("screen must be a pygame.Surface object")
         if not isinstance(delay_per_frame, int) or delay_per_frame <= 0:
@@ -51,20 +51,33 @@ class Animation:
             raise ValueError("moving_strategy must implement the MovementStrategy interface")
         if not isinstance(scale, (int, float)) or scale <= 0:
             raise ValueError("scale must be a positive integer or float")
-    def __init__(self, screen, delay_per_frame, sprite_sheet, moving_strategy, scale=1):
-        self.validate_parameters(screen, delay_per_frame, sprite_sheet, moving_strategy, scale)
+        if not isinstance(loop, bool):
+            raise ValueError("loop must be a boolean")
+    def __init__(self, screen, delay_per_frame, sprite_sheet, moving_strategy, scale=1, loop=True):
+        self.validate_parameters(screen, delay_per_frame, sprite_sheet, moving_strategy, scale, loop)
         self.screen = screen
+        self.loop = loop
         self.current_frame = 0
         self.delay_counter = 0
         self.delay_per_frame = delay_per_frame
         self.sprite_sheet = sprite_sheet
+        self.scale = scale
         self.animation_frames = self.sprite_sheet.get_images(scale)
         self.x, self.y = moving_strategy.initial_pos
         self.movement_strategy = moving_strategy
 
+    def reset(self, delay_per_frame, loop):
+        self.loop = loop
+        self.current_frame = 0
+        self.delay_counter = 0
+        self.delay_per_frame = delay_per_frame
+        self.animation_frames = self.sprite_sheet.get_images(self.scale)
+
     def update_frame(self):
+
         if self.delay_counter % self.delay_per_frame == 0:
-            self.current_frame = (self.current_frame + 1) % len(self.animation_frames)
+            if self.loop or self.current_frame < len(self.animation_frames) - 1:
+                self.current_frame = (self.current_frame + 1) % len(self.animation_frames)
         self.delay_counter += 1
 
     def update_position(self):

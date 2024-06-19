@@ -26,8 +26,8 @@ class SoundMixer(metaclass=SingletonMeta):
                 "Dying Adventure": pygame.mixer.Sound("Music/dyingAdventure.mp3"),
             }
             for sound in self.sounds.values():
-                sound.set_volume(0.2)
-            self.sounds["Dying Adventure"].set_volume(0.1)
+                sound.set_volume(0.3)
+            self.sounds["Dying Adventure"].set_volume(0.2)
     def play(self, track):
         self.sounds[track].play()
 
