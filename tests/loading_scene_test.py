@@ -15,7 +15,7 @@ class TestLoadingScene(unittest.TestCase):
             self.loading_scene = LoadingScene(self.screen, self.sound_mixer, self.clock, 2)
     def test_initial_state(self):
         self.assertEqual(self.loading_scene.loading_time, 2)
-        self.assertEqual(self.loading_scene.delay_per_frame, 6)
+        self.assertEqual(self.loading_scene.delay_per_frame, 8)
     def test_update(self):
         with patch.object(LoadingScene, 'change_animation'):
             self.loading_scene.update()

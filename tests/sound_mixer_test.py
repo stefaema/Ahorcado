@@ -7,7 +7,7 @@ import pygame
 class TestSoundMixer(unittest.TestCase):
 
     def test_singleton_instance(self):
-        pygame.init()
+        pygame.mixer.init()
         mixer1 = SoundMixer()
         mixer2 = SoundMixer()
         self.assertIs(mixer1, mixer2)

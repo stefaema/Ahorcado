@@ -11,6 +11,7 @@ class SingletonMeta(type):
 class SoundMixer(metaclass=SingletonMeta):
     def __init__(self):
         
+        
         # Inicializa solo si no se ha inicializado antes
         if not hasattr(self, 'sounds'):
 
