@@ -17,7 +17,7 @@ class LoadingScene(Scene):
         self.text_surface, self.text_rect = self.build_text_surface(SCR_WIDTH, SCR_HEIGHT)
 
         FRAME_PER_SECOND = 24
-        self.delay_per_frame = loading_time * FRAME_PER_SECOND // 6
+        self.delay_per_frame = loading_time * FRAME_PER_SECOND // 8
 
         self.animation = self.build_loading_animation(SCR_WIDTH, SCR_HEIGHT)
 
