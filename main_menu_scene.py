@@ -8,7 +8,10 @@ from text_to_image import TextToImageTool
 class MainMenuScene(Scene):
     def __init__(self, screen, sound_mixer):
         super().__init__(screen)
-        self.background = self.build_background()
+        SCR_WIDTH = self.screen.get_width()
+        SCR_HEIGHT = self.screen.get_height()
+
+        self.background = self.build_background(SCR_WIDTH, SCR_HEIGHT)
         
         self.text_plot = self.build_game_plot_image()
 
@@ -19,9 +22,9 @@ class MainMenuScene(Scene):
         self.sound_mixer = sound_mixer
         self.sound_mixer.play("A King's Invitation")
         
-    def build_background(self):
+    def build_background(self, SCR_WIDTH, SCR_HEIGHT):
         background = pygame.image.load('Images/Backgrounds/hangman-empty-background.png')
-        scaled_background = pygame.transform.scale(background, (self.screen.get_width(), background.get_height() * self.screen.get_width() // background.get_width()))
+        scaled_background = pygame.transform.scale(background, (SCR_WIDTH, background.get_height() * SCR_WIDTH // background.get_width()))
         return scaled_background
     
     def return_next_scene(self):
