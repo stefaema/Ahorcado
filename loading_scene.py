@@ -17,7 +17,7 @@ class LoadingScene(Scene):
         self.text_surface, self.text_rect = self.build_text_surface(SCR_WIDTH, SCR_HEIGHT)
 
         FRAME_PER_SECOND = 24
-        self.delay_per_frame = loading_time * FRAME_PER_SECOND // 8
+        self.delay_per_frame = loading_time * FRAME_PER_SECOND // 6
 
         self.animation = self.build_loading_animation(SCR_WIDTH, SCR_HEIGHT)
 
@@ -56,7 +56,7 @@ class LoadingScene(Scene):
             self.animation.reset(self.delay_per_frame, loop=False)
 
     def build_loading_animation(self, SCR_WIDTH, SCR_HEIGHT):
-        initial_pos = ((SCR_WIDTH -1)//4, (SCR_HEIGHT -1)//2)
+        initial_pos = ((SCR_WIDTH -1)//6, (SCR_HEIGHT -1)//2)
         final_pos = ((SCR_WIDTH -1)//2, (SCR_HEIGHT -1)//2)
         sprite_sheet = SpriteSheet("320x320","Images/HangManWalking/HangManWalking.png")
         movement_strategy = LinearStraightMovementStrategy(initial_pos, final_pos, self.loading_time//3)
